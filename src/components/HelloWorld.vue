@@ -12,8 +12,47 @@
 </template>
 
 <script>
+const config = {
+  // eslint-disable-next-line no-undef
+  LinePATHArr: typeof LinePATHArr === "undefined" ? [] : LinePATHArr,
+  // eslint-disable-next-line no-undef
+  cacheName: typeof saveNameStr === "undefined" ? "" : saveNameStr,
+  // eslint-disable-next-line no-undef
+  timeoutStr: typeof timeoutStr === "undefined" ? 3000 : timeoutStr,
+};
 export default {
   name: "HelloWorld",
+  methods: {
+    getLinePath() {
+      const cachedLinePath = localStorage.getItem(config.cacheName);
+
+      if (cachedLinePath) {
+        return JSON.parse(cachedLinePath);
+      }
+
+      // No cache found, select a line randomly or based on some logic
+      const selectedLine =
+        config.LinePATHArr[
+          Math.floor(Math.random() * config.LinePATHArr.length)
+        ];
+      if (selectedLine) {
+        localStorage.setItem(config.cacheName, JSON.stringify(selectedLine));
+      }
+      // Save selected line to cache
+
+      return selectedLine;
+    },
+    sleep(ms) {
+      return new Promise((resolve) => setTimeout(resolve, ms));
+    },
+  },
+  async created() {
+    if (!config.LinePATHArr.length || !config.cacheName) return;
+    const linePath = this.getLinePath();
+    await this.sleep(config.timeoutStr);
+    if (!linePath) return;
+    location.href = `${linePath.prefix}${linePath.domain}`;
+  },
 };
 </script>
 
@@ -51,7 +90,7 @@ export default {
       height: 100%;
       width: 0;
       background: #fff;
-      animation: load 10s linear forwards;
+      animation: load 4s linear forwards;
       @keyframes load {
         0% {
           width: 0;

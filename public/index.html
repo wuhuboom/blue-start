@@ -6,6 +6,39 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>logo.ico">
     <title>BHB</title>
+    <% if (process.env.NODE_ENV === 'production') { %>
+      <script>
+        document.write(
+          "<s" +
+            "cript type='text/javascript' src='<%= BASE_URL %>static/config.js?" +
+            Date.now() +
+            "'></scr" +
+            "ipt>"
+        );
+      </script>
+    <% } else { %>
+      <script>
+        //line address variable
+        const LinePATHArr = [{
+          'prefix': 'http://',
+          'domain': 'sgo1.cc',
+          'desc': 'Server1'
+        }, {
+          'prefix': 'https://',
+          'domain': 'sgo2.cc',
+          'desc': 'Server2'
+        }, {
+          'prefix': 'https://',
+          'domain': 'sgo3.cc',
+          'desc': 'Server3'
+        }]
+
+        // cookie_name
+        const saveNameStr = 'chooseline_domain_' + 'seo2'
+
+        const timeoutStr = 3000
+      </script>
+    <% } %>
   </head>
   <body>
     <noscript>
