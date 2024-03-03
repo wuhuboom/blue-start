@@ -1,5 +1,12 @@
 <template>
-  <div class="page-load"></div>
+  <div class="page-load center-center">
+    <ul class="flex-column center-center">
+      <li><img class="logo-img" src="@/assets/img/logo.webp" alt="" /></li>
+      <li class="title">BHB</li>
+
+      <li>Finding Optimal Route...</li>
+    </ul>
+  </div>
 </template>
 
 <script>
@@ -16,5 +23,15 @@ export default {
   background-size: cover;
   max-width: 750px;
   margin: 0 auto;
+  color: #fff;
+  .title {
+    font-size: 27px;
+    padding: 10px 0 18px;
+  }
+  .logo-img {
+    display: block;
+    width: 120px;
+    height: 120px;
+  }
 }
 </style>
