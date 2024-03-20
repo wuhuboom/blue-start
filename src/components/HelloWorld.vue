@@ -2,7 +2,7 @@
   <div class="page-load center-center">
     <ul class="flex-column center-center">
       <li><img class="logo-img" src="@/assets/img/login-logo.png" alt="" /></li>
-      <li class="title">BHB</li>
+      <li class="title">ABC</li>
       <li class="load">
         <p></p>
       </li>
