@@ -51,7 +51,7 @@ export default {
           Math.floor(Math.random() * config.LinePATHArr.length)
         ];
       if (selectedLine) {
-        localStorage.setItem(config.cacheName, JSON.stringify(selectedLine));
+        localStorage.setItem(config.cacheName, selectedLine);
       }
       // Save selected line to cache
 
@@ -67,7 +67,7 @@ export default {
     await this.sleep(config.timeoutStr);
     if (!linePath) return;
     console.log(linePath);
-    // location.href = "https://www.google.com"
+    location.href = linePath;
   },
 };
 </script>
@@ -83,7 +83,7 @@ export default {
   color: #fff;
 }
 .loading_mod2 {
-  margin-top: 43vh;
+  margin-top: 20%;
   width: 100%;
 
   .loader {
