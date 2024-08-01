@@ -1,33 +1,48 @@
 <template>
   <div class="page-load center-center">
-    <ul class="flex-column center-center">
-      <li><img class="logo-img" src="@/assets/img/login-logo.png" alt="" /></li>
-      <li class="title">ABC</li>
-      <li class="load">
-        <p></p>
-      </li>
-      <li>Finding Optimal Route...</li>
-    </ul>
+    <div class="loading_mod2">
+      <div class="loader">
+        <div class="loading_box">
+          <ul>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+          </ul>
+        </div>
+        <p class="label">{{ title }}</p>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 const config = {
   // eslint-disable-next-line no-undef
-  LinePATHArr: typeof LinePATHArr === "undefined" ? [] : LinePATHArr,
+  LinePATHArr: typeof BASE_PATH_ARR === "undefined" ? [] : BASE_PATH_ARR,
   // eslint-disable-next-line no-undef
-  cacheName: typeof saveNameStr === "undefined" ? "" : saveNameStr,
+  cacheName: typeof saveNameStr === "undefined" ? "bhb-linePath" : saveNameStr,
   // eslint-disable-next-line no-undef
-  timeoutStr: typeof timeoutStr === "undefined" ? 3000 : timeoutStr,
+  timeoutStr: typeof LOADING_TIME === "undefined" ? 3000 : LOADING_TIME,
 };
+console.log(config);
+//window.LOADING_TEXT = "Please wait..."
 export default {
   name: "HelloWorld",
+  data() {
+    return {
+      title: window.LOADING_TEXT || "Please wait...",
+    };
+  },
   methods: {
     getLinePath() {
       const cachedLinePath = localStorage.getItem(config.cacheName);
 
       if (cachedLinePath) {
-        return JSON.parse(cachedLinePath);
+        return cachedLinePath;
       }
 
       // No cache found, select a line randomly or based on some logic
@@ -51,7 +66,8 @@ export default {
     const linePath = this.getLinePath();
     await this.sleep(config.timeoutStr);
     if (!linePath) return;
-    location.href = `${linePath.prefix}${linePath.domain}`;
+    console.log(linePath);
+    // location.href = "https://www.google.com"
   },
 };
 </script>
@@ -60,49 +76,98 @@ export default {
 <style scoped lang="less">
 .page-load {
   height: 100vh;
-  background: url("@/assets/img/bg.webp") no-repeat center top;
+  background: url("@/assets/img/BG.c8edb10a.png") no-repeat center top;
   background-size: cover;
   max-width: 750px;
   margin: 0 auto;
   color: #fff;
-  .title {
-    font-size: 27px;
-    padding: 10px 0 10px;
+}
+.loading_mod2 {
+  margin-top: 43vh;
+  width: 100%;
+
+  .loader {
+    width: 100%;
+    height: 180px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 30px;
+    box-sizing: border-box;
   }
-  .logo-img {
-    display: block;
-    width: 120px;
-    height: 120px;
-  }
-  .load {
-    height: 6px;
-    width: 194px;
-    border-radius: 3px;
-    background: rgba(255, 255, 255, 0.3);
-    margin-bottom: 16px;
+
+  .loading_box {
+    width: 50%;
+    height: 10px;
+    background: #444444;
+    border-radius: 0;
     position: relative;
-    overflow: hidden;
-    P {
+
+    &::after {
+      content: "";
       position: absolute;
-      border-radius: 3px;
       top: 0;
       left: 0;
-      height: 100%;
-      width: 0;
-      background: #fff;
-      animation: load 4s linear forwards;
-      @keyframes load {
-        0% {
-          width: 0;
-        }
-        50% {
-          width: 50%;
-        }
-        100% {
-          width: 100%;
-        }
-      }
+      width: 50%;
+      height: 10px;
+      background-image: linear-gradient(180deg, #e8fcff, #48bcfd 50%, #e8fcff);
+      border-radius: 0;
+      z-index: 1;
+      animation: loading 1.2s alternate infinite;
     }
+  }
+
+  .label {
+    font-size: 32rpx;
+    color: #fff;
+    animation: bit 1.2s alternate infinite;
+  }
+
+  ul {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 3;
+    list-style: none;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 10px;
+    padding: 0;
+    margin: 0;
+
+    li {
+      background-color: #000000a3;
+      width: 4px;
+      height: 10px;
+    }
+  }
+}
+
+@keyframes bit {
+  from {
+    opacity: 0.3;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes loading {
+  0% {
+    left: 25%;
+  }
+
+  100% {
+    left: 50%;
+  }
+
+  0% {
+    left: 0%;
   }
 }
 </style>
